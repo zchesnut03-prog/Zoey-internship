@@ -76,6 +76,52 @@ const HotCollections = () => {
           ))}
         </div>
 
+        <div className="row">
+          <div className="col-12">
+            <OwlCarousel className="owl-theme" {...options}>
+              {collections.slice(0, 6).map((item) => (
+                <div className="item" key={item.id}>
+              <div className="nft_coll">
+                    <div
+                      className="nft_wrap"
+                      style={{
+                        backgroundImage: `url(${item.nftImage || item.coverImage || ''})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }}
+                    >
+                  <Link to="/item-details">
+                        <span className="nft_coll_hover" />
+                  </Link>
+                </div>
+
+                <div className="nft_coll_pp">
+                  <Link to="/author">
+                        <img className="pp-coll" src={item.authorImage} alt={item.authorName} />
+                  </Link>
+                  <i className="fa fa-check"></i>
+                </div>
+
+                <div className="nft_coll_info">
+                  <Link to="/explore">
+                        <h4>{item.title}</h4>
+                  </Link>
+                      <span>{item.code}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+            </OwlCarousel>
+          </div>
+        </div>
+
+        {fetchError && !loading && (
+          <div style={{ textAlign: 'center', padding: '12px', color: 'var(--text-muted, #6c757d)' }}>
+            Hot Collections are unavailable right now.
+            <div style={{ marginTop: 8 }}>
+              <button className="btn-main" onClick={fetchHotCollections}>Retry</button>
+            </div>
+          </div>
         {fetchError && !loading && (
           <div style={{ textAlign: 'center', padding: '12px', color: 'var(--text-muted, #6c757d)' }}>
             Hot Collections are unavailable right now.

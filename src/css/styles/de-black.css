@@ -249,21 +249,6 @@ input[type=button].btn-main,
     display: none;
 }
 
-.de-black .nft_wrap {
-  height: 260px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 12px;
-  position: relative;
-}
-
-.nft_coll_hover {
-  position: absolute;
-  inset: 0;
-}
-
-
 @media only screen and (max-width: 992px) {
 
     section:first-child {
@@ -271,4 +256,3 @@ input[type=button].btn-main,
     }
 
 }
-

@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import OwlCarousel from "react-owl-carousel";
-
+import AuthorImage from "../../images/author_thumbnail.jpg";
+import nftImage from "../../images/nftImage.jpg";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
@@ -46,12 +45,35 @@ const HotCollections = () => {
     <section id="section-collections" className="no-bottom">
       <div className="container">
         <div className="row">
-          <div className="col-12">
+          <div className="col-lg-12">
             <div className="text-center">
               <h2>Hot Collections</h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+          {new Array(4).fill(0).map((_, index) => (
+            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+              <div className="nft_coll">
+                <div className="nft_wrap">
+                  <Link to="/item-details">
+                    <img src={nftImage} className="lazy img-fluid" alt="" />
+                  </Link>
+                </div>
+                <div className="nft_coll_pp">
+                  <Link to="/author">
+                    <img className="lazy pp-coll" src={AuthorImage} alt="" />
+                  </Link>
+                  <i className="fa fa-check"></i>
+                </div>
+                <div className="nft_coll_info">
+                  <Link to="/explore">
+                    <h4>Pinky Ocean</h4>
+                  </Link>
+                  <span>ERC-192</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="row">
@@ -93,6 +115,13 @@ const HotCollections = () => {
           </div>
         </div>
 
+        {fetchError && !loading && (
+          <div style={{ textAlign: 'center', padding: '12px', color: 'var(--text-muted, #6c757d)' }}>
+            Hot Collections are unavailable right now.
+            <div style={{ marginTop: 8 }}>
+              <button className="btn-main" onClick={fetchHotCollections}>Retry</button>
+            </div>
+          </div>
         {fetchError && !loading && (
           <div style={{ textAlign: 'center', padding: '12px', color: 'var(--text-muted, #6c757d)' }}>
             Hot Collections are unavailable right now.

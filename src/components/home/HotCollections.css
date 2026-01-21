@@ -1,0 +1,12 @@
+.nft_wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nft_wrap {
+  position: relative;
+  width: 100%;
+  height: 240px; /* THIS is missing */
+  overflow: hidden;
+}

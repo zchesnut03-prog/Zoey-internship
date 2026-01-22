@@ -97,6 +97,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import AuthorImage from "../images/author_thumbnail.jpg";
 
 const ItemDetails = () => {
   const { itemId } = useParams();
@@ -195,7 +196,7 @@ const ItemDetails = () => {
 
                   <div className="item_info_counts">
                     <div className="item_info_views">
-                      <i className="fa fa-eye"></i> —
+                      <i className="fa fa-eye"></i> {item.views || item.count || item.viewsCount || '—'}
                     </div>
                     <div className="item_info_like">
                       <i className="fa fa-heart"></i> {item.likes}
@@ -203,24 +204,39 @@ const ItemDetails = () => {
                   </div>
 
                   <p>
-                    This is the details page for {item.title}.
+                    {item.description || item.details || `This is the details page for ${item.title}.`}
                   </p>
 
-                  <h6>Owner</h6>
-                  <div className="item_author">
-                    <div className="author_list_pp">
-                      <Link to={`/author/${item.author?.id || 1}`}>
-                        <img
-                          src={item.author?.image}
-                          alt={item.author?.name}
-                        />
-                        <i className="fa fa-check"></i>
-                      </Link>
+
+                  <div className="d-flex flex-row">
+                    <div className="mr40">
+                      <h6>Owner</h6>
+                      <div className="item_author">
+                        <div className="author_list_pp">
+                          <Link to={`/author/${item.owner?.id || item.author?.id || 1}`}>
+                            <img className="lazy" src={item.owner?.image || item.author?.image || AuthorImage} alt={item.owner?.name || item.author?.name || "Owner"} />
+                            <i className="fa fa-check"></i>
+                          </Link>
+                        </div>
+                        <div className="author_list_info">
+                          <Link to={`/author/${item.owner?.id || item.author?.id || 1}`}>{item.owner?.name || item.author?.name || "Owner"}</Link>
+                        </div>
+                      </div>
                     </div>
-                    <div className="author_list_info">
-                      <Link to={`/author/${item.author?.id || 1}`}>
-                        {item.author?.name}
-                      </Link>
+
+                    <div>
+                      <h6>Creator</h6>
+                      <div className="item_author">
+                        <div className="author_list_pp">
+                          <Link to={`/author/${item.creator?.id || item.author?.id || 1}`}>
+                            <img className="lazy" src={item.creator?.image || item.author?.image || AuthorImage} alt={item.creator?.name || item.author?.name || "Creator"} />
+                            <i className="fa fa-check"></i>
+                          </Link>
+                        </div>
+                        <div className="author_list_info">
+                          <Link to={`/author/${item.creator?.id || item.author?.id || 1}`}>{item.creator?.name || item.author?.name || "Creator"}</Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

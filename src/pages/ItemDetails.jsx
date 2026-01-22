@@ -208,8 +208,8 @@ const ItemDetails = () => {
                   </p>
 
 
-                  <div className="d-flex flex-row">
-                    <div className="mr40">
+                  <div className="owner-creator">
+                    <div className="owner-row" style={{ marginBottom: 12 }}>
                       <h6>Owner</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
@@ -224,7 +224,7 @@ const ItemDetails = () => {
                       </div>
                     </div>
 
-                    <div>
+                    <div className="creator-row">
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">

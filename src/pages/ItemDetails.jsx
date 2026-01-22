@@ -116,7 +116,42 @@ const ItemDetails = () => {
           (i) => String(i.id) === String(itemId)
         );
 
-        setItem(foundItem || null);
+        if (foundItem) {
+          setItem(foundItem);
+        } else {
+          // fallback: try hotCollections endpoint (some items come from there)
+          try {
+            const hotRes = await axios.get(
+              "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
+            );
+
+            const foundHot = hotRes.data.find(
+              (h) => String(h.nftId) === String(itemId) || String(h.id) === String(itemId)
+            );
+
+            if (foundHot) {
+              // Map minimal fields so ItemDetails can render
+              setItem({
+                id: foundHot.nftId || foundHot.id,
+                title: foundHot.title || foundHot.name,
+                nftImage: foundHot.nftImage || foundHot.coverImage,
+                price: foundHot.price || "—",
+                likes: foundHot.likes || 0,
+                code: foundHot.code,
+                author: {
+                  id: foundHot.authorId || (foundHot.author && foundHot.author.id) || 1,
+                  name: foundHot.authorName || (foundHot.author && foundHot.author.name) || "Unknown",
+                  image: foundHot.authorImage || (foundHot.author && foundHot.author.image) || ""
+                }
+              });
+            } else {
+              setItem(null);
+            }
+          } catch (hotErr) {
+            console.error("Fallback hotCollections fetch failed", hotErr);
+            setItem(null);
+          }
+        }
       } catch (err) {
         console.error("Item fetch failed", err);
       } finally {

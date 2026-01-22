@@ -209,32 +209,32 @@ const ItemDetails = () => {
 
 
                   <div className="owner-creator">
-                    <div className="owner-row" style={{ marginBottom: 12 }}>
+                    <div className="owner-row" style={{ marginBottom: 20 }}>
                       <h6>Owner</h6>
-                      <div className="item_author">
+                      <div className="item_author" style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 8 }}>
                         <div className="author_list_pp">
                           <Link to={`/author/${item.owner?.id || item.author?.id || 1}`}>
-                            <img className="lazy" src={item.owner?.image || item.author?.image || AuthorImage} alt={item.owner?.name || item.author?.name || "Owner"} />
+                            <img className="lazy" src={item.owner?.image || item.author?.image || AuthorImage} alt={item.owner?.name || item.author?.name || "Owner"} style={{ width: 54, height: 54, borderRadius: '50%', objectFit: 'cover' }} />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${item.owner?.id || item.author?.id || 1}`}>{item.owner?.name || item.author?.name || "Owner"}</Link>
+                          <Link to={`/author/${item.owner?.id || item.author?.id || 1}`} style={{ fontWeight: 600, fontSize: 16 }}>{item.owner?.name || item.author?.name || "Owner"}</Link>
                         </div>
                       </div>
                     </div>
 
                     <div className="creator-row">
                       <h6>Creator</h6>
-                      <div className="item_author">
+                      <div className="item_author" style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 8 }}>
                         <div className="author_list_pp">
                           <Link to={`/author/${item.creator?.id || item.author?.id || 1}`}>
-                            <img className="lazy" src={item.creator?.image || item.author?.image || AuthorImage} alt={item.creator?.name || item.author?.name || "Creator"} />
+                            <img className="lazy" src={item.creator?.image || item.author?.image || AuthorImage} alt={item.creator?.name || item.author?.name || "Creator"} style={{ width: 54, height: 54, borderRadius: '50%', objectFit: 'cover' }} />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${item.creator?.id || item.author?.id || 1}`}>{item.creator?.name || item.author?.name || "Creator"}</Link>
+                          <Link to={`/author/${item.creator?.id || item.author?.id || 1}`} style={{ fontWeight: 600, fontSize: 16 }}>{item.creator?.name || item.author?.name || "Creator"}</Link>
                         </div>
                       </div>
                     </div>

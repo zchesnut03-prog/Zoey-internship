@@ -69,23 +69,23 @@ const HotCollections = () => {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                       }}
-                    >
-                  <Link to="/item-details">
-                        <span className="nft_coll_hover" />
-                  </Link>
+        >
+      <Link to={`/item/${item.nftId || item.id}`}>
+        <span className="nft_coll_hover" />
+      </Link>
                 </div>
 
                 <div className="nft_coll_pp">
-                  <Link to="/author">
-                        <img className="pp-coll" src={item.authorImage} alt={item.authorName} />
-                  </Link>
+      <Link to={`/author/${item.authorId || item.author?.id}`}>
+        <img className="pp-coll" src={item.authorImage} alt={item.authorName} />
+      </Link>
                   <i className="fa fa-check"></i>
                 </div>
 
                 <div className="nft_coll_info">
-                  <Link to="/explore">
-                        <h4>{item.title}</h4>
-                  </Link>
+      <Link to={`/item/${item.nftId || item.id}`}>
+        <h4>{item.title}</h4>
+      </Link>
                       <span>{item.code}</span>
                 </div>
               </div>

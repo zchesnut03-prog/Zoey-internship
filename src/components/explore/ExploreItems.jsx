@@ -21,9 +21,9 @@ const ExploreItems = () => {
           style={{ display: "block", backgroundSize: "cover" }}
         >
           <div className="nft__item">
-            <div className="author_list_pp">
+              <div className="author_list_pp">
               <Link
-                to="/author"
+                to={`/author/${index + 1}`}
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
               >
@@ -51,12 +51,12 @@ const ExploreItems = () => {
                   </div>
                 </div>
               </div>
-              <Link to="/item-details">
+              <Link to={`/item/${index + 1}`}>
                 <img src={nftImage} className="lazy nft__item_preview" alt="" />
               </Link>
             </div>
             <div className="nft__item_info">
-              <Link to="/item-details">
+              <Link to={`/item/${index + 1}`}>
                 <h4>Pinky Ocean</h4>
               </Link>
               <div className="nft__item_price">1.74 ETH</div>

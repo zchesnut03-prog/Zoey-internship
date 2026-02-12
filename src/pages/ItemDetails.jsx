@@ -1,107 +1,16 @@
-// import React, { useEffect } from "react";
-// import EthImage from "../images/ethereum.svg";
-// import { Link } from "react-router-dom";
-// import AuthorImage from "../images/author_thumbnail.jpg";
-// import nftImage from "../images/nftImage.jpg";
-
-// const ItemDetails = () => {
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   }, []);
-
-//   return (
-//     <div id="wrapper">
-//       <div className="no-bottom no-top" id="content">
-//         <div id="top"></div>
-//         <section aria-label="section" className="mt90 sm-mt-0">
-//           <div className="container">
-//             <div className="row">
-//               <div className="col-md-6 text-center">
-//                 <img
-//                   src={nftImage}
-//                   className="img-fluid img-rounded mb-sm-30 nft-image"
-//                   alt=""
-//                 />
-//               </div>
-//               <div className="col-md-6">
-//                 <div className="item_info">
-//                   <h2>Rainbow Style #194</h2>
-
-//                   <div className="item_info_counts">
-//                     <div className="item_info_views">
-//                       <i className="fa fa-eye"></i>
-//                       100
-//                     </div>
-//                     <div className="item_info_like">
-//                       <i className="fa fa-heart"></i>
-//                       74
-//                     </div>
-//                   </div>
-//                   <p>
-//                     doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-//                     illo inventore veritatis et quasi architecto beatae vitae
-//                     dicta sunt explicabo.
-//                   </p>
-//                   <div className="d-flex flex-row">
-//                     <div className="mr40">
-//                       <h6>Owner</h6>
-//                       <div className="item_author">
-//                         <div className="author_list_pp">
-//                           <Link to="/author">
-//                             <img className="lazy" src={AuthorImage} alt="" />
-//                             <i className="fa fa-check"></i>
-//                           </Link>
-//                         </div>
-//                         <div className="author_list_info">
-//                           <Link to="/author">Monica Lucas</Link>
-//                         </div>
-//                       </div>
-//                     </div>
-//                     <div></div>
-//                   </div>
-//                   <div className="de_tab tab_simple">
-//                     <div className="de_tab_content">
-//                       <h6>Creator</h6>
-//                       <div className="item_author">
-//                         <div className="author_list_pp">
-//                           <Link to="/author">
-//                             <img className="lazy" src={AuthorImage} alt="" />
-//                             <i className="fa fa-check"></i>
-//                           </Link>
-//                         </div>
-//                         <div className="author_list_info">
-//                           <Link to="/author">Monica Lucas</Link>
-//                         </div>
-//                       </div>
-//                     </div>
-//                     <div className="spacer-40"></div>
-//                     <h6>Price</h6>
-//                     <div className="nft-item-price">
-//                       <img src={EthImage} alt="" />
-//                       <span>1.85</span>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </section>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ItemDetails;
 
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
+import "../index.css";
+import EthImage from "../images/ethereum.svg";
+
 const ItemDetails = () => {
   const { itemId } = useParams();
+
   const [item, setItem] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -109,100 +18,98 @@ const ItemDetails = () => {
     const fetchItem = async () => {
       try {
         const res = await axios.get(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${itemId}`
         );
-
-        const foundItem = res.data.find(
-          (i) => String(i.id) === String(itemId)
-        );
-
-        setItem(foundItem || null);
+        setItem(res.data);
       } catch (err) {
-        console.error("Item fetch failed", err);
-      } finally {
-        setLoading(false);
+        console.error("Item details fetch failed", err);
       }
     };
 
     fetchItem();
   }, [itemId]);
 
-  if (loading) {
-    return <div style={{ padding: 100, textAlign: "center" }}>Loading...</div>;
-  }
-
-  if (!item) {
-    return <div style={{ padding: 100, textAlign: "center" }}>Item not found</div>;
-  }
+  if (!item) return null;
 
   return (
     <div id="wrapper">
-      <div id="content" className="no-bottom no-top">
+      <div className="no-bottom no-top" id="content">
         <div id="top"></div>
 
-        <section className="mt90 sm-mt-0">
+        <section aria-label="section" className="mt90 sm-mt-0">
           <div className="container">
-            <div className="row align-items-center">
+            <div className="row">
 
-              {/* IMAGE */}
               <div className="col-md-6 text-center">
                 <img
                   src={item.nftImage}
-                  className="img-fluid img-rounded mb-sm-30"
+                  className="img-fluid img-rounded mb-sm-30 nft-image"
                   alt={item.title}
                 />
               </div>
 
-              {/* INFO */}
               <div className="col-md-6">
                 <div className="item_info">
                   <h2>{item.title}</h2>
 
                   <div className="item_info_counts">
-                    <div className="item_info_views">
-                      <i className="fa fa-eye"></i> —
-                    </div>
                     <div className="item_info_like">
                       <i className="fa fa-heart"></i> {item.likes}
                     </div>
                   </div>
 
-                  <p>
-                    This is the details page for {item.title}.
-                  </p>
-
-                  <h6>Owner</h6>
-                  <div className="item_author">
-                    <div className="author_list_pp">
-                      <Link to={`/author/${item.author?.id || 1}`}>
-                        <img
-                          src={item.author?.image}
-                          alt={item.author?.name}
-                        />
-                        <i className="fa fa-check"></i>
-                      </Link>
-                    </div>
-                    <div className="author_list_info">
-                      <Link to={`/author/${item.author?.id || 1}`}>
-                        {item.author?.name}
-                      </Link>
+                  <div className="d-flex flex-row gap-5">
+                    <div>
+                      <h6>Owner</h6>
+                      <div className="item_author">
+                        <div className="author_list_pp">
+                          <Link to={`/author/${item.authorId}`}>
+                            <img src={item.authorImage} alt="author" />
+                            <i className="fa fa-check"></i>
+                          </Link>
+                        </div>
+                        <div className="author_list_info">
+                          <Link to={`/author/${item.authorId}`}>
+                            Author #{item.authorId}
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="spacer-20"></div>
+                  <div className="de_tab tab_simple mt-4">
+                    <h6>Creator</h6>
 
-                  <h6>Price</h6>
-                  <div className="nft-item-price">
-                    <i className="fab fa-ethereum"></i>
-                    <span>{item.price}</span>
+                    <div className="item_author">
+                      <div className="author_list_pp">
+                        <Link to={`/author/${item.authorId}`}>
+                          <img src={item.authorImage} alt="author" />
+                          <i className="fa fa-check"></i>
+                        </Link>
+                      </div>
+                      <div className="author_list_info">
+                        <Link to={`/author/${item.authorId}`}>
+                          Author #{item.authorId}
+                        </Link>
+                      </div>
+                    </div>
+
+                    <div className="spacer-40"></div>
+
+                    <h6>Price</h6>
+                    <div className="nft-item-price">
+                      <img src={EthImage} alt="ETH" />
+                      <span>{item.price} ETH</span>
+                    </div>
+
                   </div>
+
                 </div>
               </div>
 
             </div>
           </div>
         </section>
-
       </div>
     </div>
   );

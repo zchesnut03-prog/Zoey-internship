@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import OwlCarousel from "react-owl-carousel";
 
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
+
 const NewItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +25,6 @@ const NewItems = () => {
     };
 
     fetchNewItems();
-
   }, []);
 
   const options = {
@@ -54,7 +56,7 @@ const NewItems = () => {
             ) : (
               <OwlCarousel className="owl-theme" {...options}>
                 {items.map((item) => (
-                  <div className="item" key={item.id}>
+                  <div className="item" key={item.nftId}>
                     <NFTItem item={item} />
                   </div>
                 ))}
@@ -71,12 +73,12 @@ const NFTItem = ({ item }) => {
   const [timeLeft, setTimeLeft] = useState(null);
 
   useEffect(() => {
-    // Only some items have countdowns (like demo)
-    if (Math.random() > 0.5) return;
-
-    let remaining = Math.floor(Math.random() * 20000) + 3600;
+    if (!item.expiryDate) return;
 
     const tick = () => {
+      const now = Date.now();
+      const remaining = Math.floor((item.expiryDate - now) / 1000);
+
       if (remaining <= 0) {
         setTimeLeft("Expired");
         return;
@@ -87,19 +89,19 @@ const NFTItem = ({ item }) => {
       const s = remaining % 60;
 
       setTimeLeft(`${h}h ${m}m ${s}s`);
-      remaining -= 1;
     };
 
     tick();
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [item.expiryDate]);
 
   return (
     <div className="nft__item">
+      
       <div className="author_list_pp">
-        <Link to={`/author/${item.authorName}`}>
-          <img src={item.authorImage} alt={item.authorName} />
+        <Link to={`/author/${item.authorId}`}>
+          <img src={item.authorImage} alt="author" />
           <i className="fa fa-check"></i>
         </Link>
       </div>
@@ -107,7 +109,8 @@ const NFTItem = ({ item }) => {
       {timeLeft && <div className="de_countdown">{timeLeft}</div>}
 
       <div className="nft__item_wrap">
-        <Link to={`/item/${item.id}`}>
+        <Link to={`/item/${item.nftId}`}>
+
           <img
             src={item.nftImage}
             className="nft__item_preview"
@@ -117,10 +120,12 @@ const NFTItem = ({ item }) => {
       </div>
 
       <div className="nft__item_info">
-        <Link to={`/item/${item.id}`}>
-          <h4>{item.title}</h4>
-        </Link>
+        <Link to={`/item/${item.nftId}`}>
+  <h4>{item.title}</h4>
+</Link>
+
         <div className="nft__item_price">{item.price} ETH</div>
+
         <div className="nft__item_like">
           <i className="fa fa-heart"></i>
           <span>{item.likes}</span>
@@ -129,9 +134,6 @@ const NFTItem = ({ item }) => {
     </div>
   );
 };
-
-
-
 
 const SkeletonItems = () => (
   <div className="row">
@@ -147,7 +149,5 @@ const SkeletonItems = () => (
     ))}
   </div>
 );
-
-
 
 export default NewItems;

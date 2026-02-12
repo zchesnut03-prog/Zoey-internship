@@ -28,17 +28,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Author from "./pages/Author";
 import ItemDetails from "./pages/ItemDetails";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <Router>
+      <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-
-        {/* FIXED ROUTES */}
         <Route path="/author/:authorId" element={<Author />} />
         <Route path="/item/:itemId" element={<ItemDetails />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

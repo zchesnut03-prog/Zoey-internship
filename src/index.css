@@ -59,3 +59,53 @@
 #content {
   overflow: visible !important;
 }
+
+
+/* ITEM DETAILS PAGE */
+
+.item-details-section {
+  padding: 100px 0;
+}
+
+.nft-detail-image {
+  max-height: 520px;
+  object-fit: cover;
+}
+
+.item_info_counts {
+  display: flex;
+  gap: 30px;
+  margin: 15px 0 25px;
+  font-size: 15px;
+  color: #aaa;
+}
+
+.item_info_counts i {
+  margin-right: 6px;
+}
+
+.item-description {
+  margin-bottom: 30px;
+  line-height: 1.7;
+}
+
+.info-block {
+  margin-bottom: 25px;
+}
+
+.author-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.author-row img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.price-tag {
+  font-size: 20px;
+  font-weight: 600;
+}

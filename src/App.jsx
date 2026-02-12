@@ -37,8 +37,6 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-
-        {/* FIXED ROUTES */}
         <Route path="/author/:authorId" element={<Author />} />
         <Route path="/item/:itemId" element={<ItemDetails />} />
       </Routes>

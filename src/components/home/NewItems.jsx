@@ -2,28 +2,30 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import OwlCarousel from "react-owl-carousel";
+import { getNewItems } from "../../API/nftAPI";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
-    const fetchNewItems = async () => {
-      try {
-        const res = await axios.get(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
-        );
-        setItems(res.data || []);
-      } catch (err) {
-        console.error("New items fetch failed", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadData = async () => {
+    try {
+      const data = await getNewItems();
 
-    fetchNewItems();
+console.log("NEW ITEMS RESPONSE:", data);
 
-  }, []);
+      setItems(data || []);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  loadData();
+}, []);
 
   const options = {
     loop: true,
@@ -54,7 +56,7 @@ const NewItems = () => {
             ) : (
               <OwlCarousel className="owl-theme" {...options}>
                 {items.map((item) => (
-                  <div className="item" key={item.id}>
+                  <div className="item" key={item.nftId}>
                     <NFTItem item={item} />
                   </div>
                 ))}
@@ -71,7 +73,6 @@ const NFTItem = ({ item }) => {
   const [timeLeft, setTimeLeft] = useState(null);
 
   useEffect(() => {
-    // Only some items have countdowns (like demo)
     if (Math.random() > 0.5) return;
 
     let remaining = Math.floor(Math.random() * 20000) + 3600;
@@ -98,8 +99,8 @@ const NFTItem = ({ item }) => {
   return (
     <div className="nft__item">
       <div className="author_list_pp">
-        <Link to={`/author/${item.authorName}`}>
-          <img src={item.authorImage} alt={item.authorName} />
+        <Link to={`/author/${item.authorId}`}>
+          <img src={item.authorImage} alt={item.authorId} />
           <i className="fa fa-check"></i>
         </Link>
       </div>
@@ -107,7 +108,7 @@ const NFTItem = ({ item }) => {
       {timeLeft && <div className="de_countdown">{timeLeft}</div>}
 
       <div className="nft__item_wrap">
-        <Link to={`/item/${item.id}`}>
+        <Link to={`/item/${item.nftId || item.id}`}>
           <img
             src={item.nftImage}
             className="nft__item_preview"
@@ -117,7 +118,7 @@ const NFTItem = ({ item }) => {
       </div>
 
       <div className="nft__item_info">
-        <Link to={`/item/${item.id}`}>
+        <Link to={`/item/${item.nftId || item.id}`}>
           <h4>{item.title}</h4>
         </Link>
         <div className="nft__item_price">{item.price} ETH</div>

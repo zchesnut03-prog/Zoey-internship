@@ -1,0 +1,49 @@
+import axios from "axios";
+
+const BASE_URL =
+  "https://us-central1-nft-cloud-functions.cloudfunctions.net";
+
+export const getHotCollections = async () => {
+  const res = await axios.get(`${BASE_URL}/hotCollections`);
+  return res.data;
+};
+
+export const getNewItems = async () => {
+  const res = await axios.get(`${BASE_URL}/newItems`);
+  return res.data;
+};
+
+// export const getNewItems = async () => {
+//   const res = await axios.get(`${BASE_URL}/newItems`);
+//   return res.data.data;   
+// };
+
+export const getTopSellers = async () => {
+  const res = await axios.get(`${BASE_URL}/topSellers`);
+  return res.data;
+};
+
+// export const getExploreItems = async () => {
+//   const res = await axios.get(`${BASE_URL}/explore`);
+//   return res.data;
+// };
+
+export const getExploreItems = async () => {
+  const res = await axios.get(`${BASE_URL}/explore`);
+  console.log("FULL EXPLORE RESPONSE:", res.data);
+  return res.data;   // ✅ return raw data
+};
+
+// export const getAuthorById = async (authorId) => {
+//   const res = await axios.get(
+//     `${BASE_URL}/authors?author=${authorId}`
+//   );
+//   return res.data;
+// };
+
+export const getAuthorById = async (authorId) => {
+  const res = await axios.get(
+    `${BASE_URL}/authors?author=${authorId}`
+  );
+  return res.data.data;   
+};

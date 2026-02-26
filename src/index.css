@@ -59,3 +59,104 @@
 #content {
   overflow: visible !important;
 }
+
+
+.sellers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.seller-card {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: 0.3s;
+  text-decoration: none;
+  color: white;
+}
+
+.seller-card:hover {
+  transform: translateY(-5px);
+}
+
+.seller-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* Skeleton */
+.skeleton {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton .seller-img,
+.skeleton .seller-name,
+.skeleton .seller-price {
+  background: #333;
+  border-radius: 8px;
+}
+
+.skeleton .seller-img {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+}
+
+.skeleton .seller-name {
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.skeleton .seller-price {
+  height: 15px;
+  width: 60%;
+  margin: 0 auto;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.skeleton-box {
+  height: 350px;
+  background: #222;
+  border-radius: 10px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* --- FORCE EXPLORE CARDS TO DISPLAY --- */
+
+.d-item {
+  display: block !important;
+  float: none !important;
+}
+
+.nft__item {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.nft__item_wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+img.lazy {
+  opacity: 1 !important;
+}

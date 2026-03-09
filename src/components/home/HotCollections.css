@@ -1,12 +1,12 @@
-.nft_wrap img {
+#section-collections .nft_wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.nft_wrap {
+#section-collections .nft_wrap {
   position: relative;
   width: 100%;
-  height: 240px; /* THIS is missing */
+  height: 240px;
   overflow: hidden;
 }

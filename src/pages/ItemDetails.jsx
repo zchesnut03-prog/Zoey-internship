@@ -261,52 +261,633 @@
 
 // // export default ItemDetails;
 
+// import { useEffect, useState } from "react";
+// import { useParams, Link } from "react-router-dom";
+// import { getNewItems, getExploreItems, getHotCollections} from "../API/nftAPI";
+
+// const ItemDetails = () => {
+//   const { itemId } = useParams();
+//   const [item, setItem] = useState(null);
+
+//   useEffect(() => {
+
+    
+
+//     const loadItem = async () => {
+
+
+
+//       try {
+//         // const [newItems, explore] = await Promise.all([
+//         //   getNewItems(),
+//         //   getExploreItems()
+//         // ]);
+
+//         // const allItems = [...newItems, ...explore];
+
+        
+
+//         const [newItemsRes, exploreRes, hotRes] = await Promise.all([
+//   getNewItems(),
+//   getExploreItems(),
+//   getHotCollections()
+// ]);
+
+// const newItems = Array.isArray(newItemsRes)
+//   ? newItemsRes
+//   : newItemsRes?.data || [];
+
+// const explore = Array.isArray(exploreRes)
+//   ? exploreRes
+//   : exploreRes?.data || [];
+
+// const hot = Array.isArray(hotRes)
+//   ? hotRes
+//   : hotRes?.data || [];
+
+// const allItems = [...newItems, ...explore, ...hot];
+
+
+
+//         const found = allItems.find(
+//   (i) => String(i.nftId) === String(itemId)
+// );
+// console.log("FOUND ITEM:", found);
+//         setItem(found);
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     };
+
+//     loadItem();
+//   }, [itemId]);
+
+//   if (!item) return <div style={{ padding: 80 }}>Loading...</div>;
+
+//   return (
+//     <div id="wrapper">
+//       <div id="content" className="no-bottom no-top">
+
+//         <section className="mt90">
+//           <div className="container">
+//             <div className="row align-items-center">
+
+//               <div className="col-lg-6 col-md-7">
+//                 <div
+//   style={{
+//     width: "100%",
+//     aspectRatio: "1 / 1",
+//     overflow: "hidden",
+//     borderRadius: "16px"
+//   }}
+// >
+//   <img
+//     src={item.nftImage}
+//     alt={item.title}
+//     style={{
+//       width: "100%",
+//       height: "100%",
+//       objectFit: "cover"
+//     }}
+//   />
+// </div>
+//               </div>
+
+//               <div className="col-lg-5 col-md-5">
+
+//   <h2>{item.title}</h2>
+
+//   <div className="nft-item-price">
+//     {item.price} ETH
+//   </div>
+
+//   {/* Creator / Author Section */}
+//   <div style={{ marginTop: "20px" }}>
+//     <p style={{ marginBottom: "6px", fontWeight: "500" }}>
+//       Creator:
+//     </p>
+
+//     <Link to={`/author/${item.authorId}`}>
+//       {item.authorName || "View Author"}
+//     </Link>
+//   </div>
+
+//   {/* Description */}
+//   {item.description && (
+//     <div style={{ marginTop: "25px" }}>
+//       <p style={{ lineHeight: "1.6", color: "#ccc" }}>
+//         {item.description}
+//       </p>
+//     </div>
+//   )}
+
+//   {/* Metadata Section */}
+//   <div style={{ marginTop: "25px" }}>
+//     {item.category && (
+//       <p><strong>Category:</strong> {item.category}</p>
+//     )}
+
+//     {item.createdAt && (
+//       <p><strong>Created:</strong> {item.createdAt}</p>
+//     )}
+
+//     {item.collectionName && (
+//       <p><strong>Collection:</strong> {item.collectionName}</p>
+//     )}
+//   </div>
+
+// </div>
+
+//             </div>
+//           </div>
+//         </section>
+
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ItemDetails;
+
+// import { useEffect, useState } from "react";
+// import { useParams, Link } from "react-router-dom";
+// import { getExploreItems } from "../API/nftAPI";
+
+// const ItemDetails = () => {
+//   const { itemId } = useParams();
+//   const [item, setItem] = useState(null);
+
+//   useEffect(() => {
+
+//     const loadItem = async () => {
+//       try {
+
+//         // ONLY load explore items so we get the full object
+//         const exploreRes = await getExploreItems();
+
+//         const explore = Array.isArray(exploreRes)
+//           ? exploreRes
+//           : exploreRes?.data || [];
+
+//         const found = explore.find(
+//           (i) => String(i.nftId) === String(itemId)
+//         );
+
+//         console.log("FOUND FULL ITEM:", found);
+
+//         setItem(found);
+
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     };
+
+//     loadItem();
+
+//   }, [itemId]);
+
+//   if (!item) return <div style={{ padding: 80 }}>Loading...</div>;
+
+//   return (
+//     <div id="wrapper">
+//       <div id="content" className="no-bottom no-top">
+
+//         <section className="mt90">
+//           <div className="container">
+//             <div className="row align-items-center">
+
+//               <div className="col-lg-6 col-md-7">
+//                 <div
+//                   style={{
+//                     width: "100%",
+//                     aspectRatio: "1 / 1",
+//                     overflow: "hidden",
+//                     borderRadius: "16px"
+//                   }}
+//                 >
+//                   <img
+//                     src={item.nftImage}
+//                     alt={item.title}
+//                     style={{
+//                       width: "100%",
+//                       height: "100%",
+//                       objectFit: "cover"
+//                     }}
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className="col-lg-5 col-md-5">
+
+// <h2 style={{marginBottom:"10px"}}>
+//   {item.title}
+// </h2>
+
+// <h3 style={{color:"#888", marginBottom:"25px"}}>
+//   #{item.nftId}
+// </h3>
+
+// {/* Likes Box */}
+// <div style={{display:"flex", gap:"12px", marginBottom:"25px"}}>
+
+// <div style={{
+//   background:"#eee",
+//   padding:"10px 16px",
+//   borderRadius:"8px",
+//   display:"flex",
+//   alignItems:"center",
+//   gap:"8px"
+// }}>
+//   👁 324
+// </div>
+
+// <div style={{
+//   background:"#eee",
+//   padding:"10px 16px",
+//   borderRadius:"8px",
+//   display:"flex",
+//   alignItems:"center",
+//   gap:"8px"
+// }}>
+//   ❤️ {item.likes}
+// </div>
+
+// <p style={{
+//   color:"#777",
+//   lineHeight:"1.6",
+//   marginBottom:"30px"
+// }}> 
+//   illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+// </p>
+
+// </div>
+
+// <p style={{fontWeight:"600"}}>Owner</p>
+
+// <div style={{
+//   display:"flex",
+//   alignItems:"center",
+//   gap:"12px",
+//   marginBottom:"25px"
+// }}>
+//   <img
+//     src={item.authorImage}
+//     style={{
+//       width:"40px",
+//       height:"40px",
+//       borderRadius:"50%"
+//     }}
+//   />
+
+//   <span>Nicholas Daniels</span>
+// </div>
+
+
+// {/* Creator Section */}
+// <p style={{fontWeight:"600"}}>Creator</p>
+
+// <div style={{
+//   display:"flex",
+//   alignItems:"center",
+//   gap:"12px",
+//   marginBottom:"30px"
+// }}>
+//   <img
+//     src={item.authorImage}
+//     style={{
+//       width:"40px",
+//       height:"40px",
+//       borderRadius:"50%"
+//     }}
+//   />
+
+//   <Link to={`/author/${item.authorId}`}>
+//     Author #{item.authorId}
+//   </Link>
+// </div>
+
+
+// {/* Price Section */}
+// <p style={{fontWeight:"600"}}>Price</p>
+
+// <div style={{
+//   display:"flex",
+//   alignItems:"center",
+//   gap:"10px",
+//   marginTop:"10px"
+// }}>
+//   <img
+//     src="https://cryptologos.cc/logos/ethereum-eth-logo.png"
+//     width="24"
+//   />
+
+//   <span style={{
+//     fontSize:"28px",
+//     fontWeight:"600"
+//   }}>
+//     {item.price}
+//   </span>
+// </div>
+
+
+
+// </div>
+
+//             </div>
+//           </div>
+//         </section>
+
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ItemDetails;
+
+// import { useEffect, useState } from "react";
+// import { useParams, Link } from "react-router-dom";
+// import { getExploreItems } from "../API/nftAPI";
+
+// const ItemDetails = () => {
+//   const { itemId } = useParams();
+//   const [item, setItem] = useState(null);
+
+//   useEffect(() => {
+
+//     const loadItem = async () => {
+//       try {
+
+//         const exploreRes = await getExploreItems();
+
+//         const explore = Array.isArray(exploreRes)
+//           ? exploreRes
+//           : exploreRes?.data || [];
+
+//         const found = explore.find(
+//           (i) => String(i.nftId) === String(itemId)
+//         );
+
+//         console.log("FOUND FULL ITEM:", found);
+
+//         setItem(found);
+
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     };
+
+//     loadItem();
+
+//   }, [itemId]);
+
+//   if (!item) return <div style={{ padding: 80 }}>Loading...</div>;
+
+//   return (
+//     <div id="wrapper">
+//       <div id="content" className="no-bottom no-top">
+
+//         <section className="mt90">
+//           <div className="container">
+//             <div className="row align-items-center">
+
+//               {/* IMAGE */}
+//               <div className="col-lg-6 col-md-7">
+//                 <div
+//                   style={{
+//                     width: "100%",
+//                     aspectRatio: "1 / 1",
+//                     overflow: "hidden",
+//                     borderRadius: "16px"
+//                   }}
+//                 >
+//                   <img
+//                     src={item.nftImage}
+//                     alt={item.title}
+//                     style={{
+//                       width: "100%",
+//                       height: "100%",
+//                       objectFit: "cover"
+//                     }}
+//                   />
+//                 </div>
+//               </div>
+
+//               {/* RIGHT SIDE */}
+//               <div className="col-lg-5 col-md-5">
+
+//                 {/* TITLE + ID */}
+//                 <h2 style={{marginBottom:"25px"}}>
+//                   {item.title}
+//                   <span style={{color:"#888", marginLeft:"10px"}}>
+//                     #{item.nftId}
+//                   </span>
+//                 </h2>
+
+//                 {/* STATS */}
+//                 <div style={{
+//                   display:"flex",
+//                   gap:"14px",
+//                   marginBottom:"25px"
+//                 }}>
+
+//                   <div style={{
+//                     background:"#eee",
+//                     padding:"8px 18px",
+//                     borderRadius:"8px",
+//                     fontSize:"14px",
+//                     display:"flex",
+//                     alignItems:"center",
+//                     gap:"6px"
+//                   }}>
+//                     👁 324
+//                   </div>
+
+//                   <div style={{
+//                     background:"#eee",
+//                     padding:"8px 18px",
+//                     borderRadius:"8px",
+//                     fontSize:"14px",
+//                     display:"flex",
+//                     alignItems:"center",
+//                     gap:"6px"
+//                   }}>
+//                     ❤️ {item.likes}
+//                   </div>
+
+//                 </div>
+
+//                 {/* DESCRIPTION */}
+//                 <p style={{
+//                   color:"#777",
+//                   lineHeight:"1.7",
+//                   marginBottom:"35px"
+//                 }}>
+//                   illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+//                 </p>
+
+//                 {/* OWNER */}
+//                 <p style={{fontWeight:"600", color:"#000"}}>Owner</p>
+
+//                 <div style={{
+//                   display:"flex",
+//                   alignItems:"center",
+//                   gap:"12px",
+//                   marginBottom:"25px"
+//                 }}>
+//                   <div style={{position:"relative"}}>
+//                     <img
+//                       src={item.authorImage}
+//                       style={{
+//                         width:"42px",
+//                         height:"42px",
+//                         borderRadius:"50%"
+//                       }}
+//                     />
+
+//                     {/* purple verification */}
+//                     <span style={{
+//                       position:"absolute",
+//                       bottom:"-2px",
+//                       right:"-2px",
+//                       background:"#6f42c1",
+//                       color:"#fff",
+//                       width:"16px",
+//                       height:"16px",
+//                       borderRadius:"50%",
+//                       fontSize:"10px",
+//                       display:"flex",
+//                       alignItems:"center",
+//                       justifyContent:"center"
+//                     }}>
+//                       ✓
+//                     </span>
+//                   </div>
+
+//                   <Link to={`/owner/${item.ownerId}`}
+//                   style={{
+//                           fontWeight: "500",
+//                           color: "#000",
+//                           textDecoration: "none"
+//                         }}>
+
+//                     Author #{item.ownerId}
+//                   </Link>
+//                 </div>
+
+//                 {/* CREATOR */}
+//                 <p style={{fontWeight:"600", color:"#000"}}>Creator</p>
+
+//                 <div style={{
+//                   display:"flex",
+//                   alignItems:"center",
+//                   gap:"12px",
+//                   marginBottom:"35px"
+//                 }}>
+//                   <div style={{position:"relative"}}>
+//                     <img
+//                       src={item.authorImage}
+//                       style={{
+//                         width:"42px",
+//                         height:"42px",
+//                         borderRadius:"50%"
+//                       }}
+//                     />
+
+//                     <span style={{
+//                       position:"absolute",
+//                       bottom:"-2px",
+//                       right:"-2px",
+//                       background:"#6f42c1",
+//                       color:"#fff",
+//                       width:"16px",
+//                       height:"16px",
+//                       borderRadius:"50%",
+//                       fontSize:"10px",
+//                       display:"flex",
+//                       alignItems:"center",
+//                       justifyContent:"center"
+//                     }}>
+//                       ✓
+//                     </span>
+//                   </div>
+
+//                   <Link to={`/author/${item.authorId}`}
+//                   style={{
+//                           fontWeight: "500",
+//                           color: "#000",
+//                           textDecoration: "none"
+//                         }}>
+
+//                     Author #{item.authorId}
+//                   </Link>
+//                 </div>
+
+//                 {/* PRICE */}
+//                 <p style={{fontWeight:"600", color:"#000"}}>Price</p>
+
+//                 <div style={{
+//                   display:"flex",
+//                   alignItems:"center",
+//                   gap:"10px"
+//                 }}>
+//                   <img
+//                     src="https://cryptologos.cc/logos/ethereum-eth-logo.png"
+//                     width="26"
+//                     alt="ETH"
+//                   />
+
+//                   <span style={{
+//                     fontSize:"28px",
+//                     fontWeight:"600"
+//                   }}>
+//                     {item.price}
+//                   </span>
+//                 </div>
+
+//               </div>
+
+//             </div>
+//           </div>
+//         </section>
+
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ItemDetails;
+
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getNewItems, getExploreItems } from "../API/nftAPI";
+import { getItemDetails } from "../API/nftAPI";
 
 const ItemDetails = () => {
+
   const { itemId } = useParams();
   const [item, setItem] = useState(null);
 
   useEffect(() => {
-    const loadItem = async () => {
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const loadItem = async () => {
+
       try {
-        // const [newItems, explore] = await Promise.all([
-        //   getNewItems(),
-        //   getExploreItems()
-        // ]);
 
-        // const allItems = [...newItems, ...explore];
+        const data = await getItemDetails(itemId);
 
-        const [newItemsRes, exploreRes] = await Promise.all([
-  getNewItems(),
-  getExploreItems()
-]);
+        console.log("ITEM DETAILS:", data);
 
-const newItems = Array.isArray(newItemsRes)
-  ? newItemsRes
-  : newItemsRes?.data || [];
+        setItem(data);
 
-const explore = Array.isArray(exploreRes)
-  ? exploreRes
-  : exploreRes?.data || [];
-
-const allItems = [...newItems, ...explore];
-
-
-
-        const found = allItems.find(
-  (i) => String(i.nftId) === String(itemId)
-);
-
-        setItem(found);
       } catch (err) {
         console.error(err);
       }
+
     };
 
     loadItem();
+
   }, [itemId]);
 
   if (!item) return <div style={{ padding: 80 }}>Loading...</div>;
@@ -317,26 +898,223 @@ const allItems = [...newItems, ...explore];
 
         <section className="mt90">
           <div className="container">
-            <div className="row align-items-center">
+            <div className="row align-items-stretch">
 
-              <div className="col-md-6 text-center">
-                <img
-                  src={item.nftImage}
-                  className="img-fluid"
-                  alt={item.title}
-                />
+              {/* Image */}
+              <div className="col-lg-6 col-md-7">
+                <div
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1 / 1",
+                    overflow: "hidden",
+                    borderRadius: "16px"
+                  }}
+                >
+                  <img
+                    src={item.nftImage}
+                    alt={item.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover"
+                    }}
+                  />
+                </div>
               </div>
 
-              <div className="col-md-6">
-                <h2>{item.title}</h2>
+              {/* right side */}
+              <div
+  className="col-lg-5 col-md-5"
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    height: "100%"
+  }}
+>
+  <div>
 
-                <div className="nft-item-price">
-                  {item.price} ETH
+                {/* title and # */}
+                <h2 style={{ marginBottom: "20px" }}>
+  {item.title} #{item.tag}
+</h2>
+
+                {/* views and likes */}
+                <div style={{
+                  display:"flex",
+                  gap:"14px",
+                  marginBottom:"25px"
+                }}>
+
+                  <div style={{
+                    background:"#f4f4f4",
+                    padding:"10px 20px",
+                    borderRadius:"10px",
+                    fontSize:"14px",
+                    display:"flex",
+                    alignItems:"center",
+                    gap:"8px",
+                    fontWeight: "500"
+                  }}>
+                    👁 {item.views}
+                  </div>
+
+                  <div style={{
+                    background:"#f4f4f4",
+                    padding:"10px 20px",
+                    borderRadius:"10px",
+                    fontSize:"14px",
+                    display:"flex",
+                    alignItems:"center",
+                    gap:"8px",
+                    fontWeight: "500"
+                  }}>
+                    ❤️ {item.likes}
+                  </div>
+
                 </div>
 
-                <Link to={`/author/${item.authorId}`}>
-                  View Author
-                </Link>
+                {/* para */}
+                <p style={{
+                  color:"#777",
+                  lineHeight:"1.7",
+                  marginBottom:"20px"
+                }}>
+                  {item.description}
+                </p>
+
+                {/* owner */}
+                <p style={{fontWeight:"600", color:"#000", marginBottom:"10px"}}>Owner</p>
+
+                <div style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:"12px",
+                  marginBottom:"35px"
+                }}>
+
+                  <div style={{position:"relative"}}>
+
+                    <img
+                      src={item.ownerImage}
+                      style={{
+                        width:"42px",
+                        height:"42px",
+                        borderRadius:"50%"
+                      }}
+                    />
+
+                    <span style={{
+                      position:"absolute",
+                      bottom:"-2px",
+                      right:"-2px",
+                      background:"#6f42c1",
+                      color:"#fff",
+                      width:"16px",
+                      height:"16px",
+                      borderRadius:"50%",
+                      fontSize:"10px",
+                      display:"flex",
+                      alignItems:"center",
+                      justifyContent:"center"
+                    }}>
+                      ✓
+                    </span>
+
+                  </div>
+
+                  <Link
+                    to={`/author/${item.ownerId}`}
+                    style={{
+                      fontWeight: "500",
+                      color: "#000",
+                      textDecoration: "none"
+                    }}
+                  >
+                    {item.ownerName}
+                  </Link>
+
+                </div>
+
+                {/* creator */}
+                <p style={{fontWeight:"600", color:"#000", marginBottom:"10px"}}>Creator</p>
+
+                <div style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:"12px",
+                  marginBottom:"35px"
+                }}>
+
+                  <div style={{position:"relative"}}>
+
+                    <img
+                      src={item.creatorImage}
+                      style={{
+                        width:"42px",
+                        height:"42px",
+                        borderRadius:"50%"
+                      }}
+                    />
+                    <span style={{
+                      position:"absolute",
+                      bottom:"-2px",
+                      right:"-2px",
+                      background:"#6f42c1",
+                      color:"#fff",
+                      width:"16px",
+                      height:"16px",
+                      borderRadius:"50%",
+                      fontSize:"10px",
+                      display:"flex",
+                      alignItems:"center",
+                      justifyContent:"center"
+                    }}>
+                      ✓
+                    </span>
+                  </div>
+                  <Link
+                    to={`/author/${item.creatorId}`}
+                    style={{
+                      fontWeight: "500",
+                      color: "#000",
+                      textDecoration: "none"
+                    }}
+                  >
+                    {item.creatorName}
+                  </Link>
+
+                </div>
+                </div>
+
+                {/* price */}
+
+                <div>
+                
+                <p style={{fontWeight:"600", color:"#000", marginBottom:"10px"}}>Price</p>
+
+                <div style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:"10px"
+                }}>
+                  <img
+                    src="https://nft-marketplacee.web.app/static/media/ethereum.df265e367364f285053a1285ad8d418d.svg"
+                    width="26"
+                    alt="ETH"
+                  />
+
+                  <span style={{
+                    fontSize:"28px",
+                    fontWeight:"600",
+                    color: "#000"
+                  }}>
+                    {item.price} 
+                  </span>
+
+                </div>
+                </div>
+
               </div>
 
             </div>

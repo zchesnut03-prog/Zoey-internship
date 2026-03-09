@@ -47,3 +47,20 @@ export const getAuthorById = async (authorId) => {
   );
   return res.data.data;   
 };
+
+export const getItemDetails = async (nftId) => {
+  try {
+
+    const response = await fetch(
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`
+    );
+
+    const data = await response.json();
+
+    return data;
+
+  } catch (error) {
+    console.error("ItemDetails API Error:", error);
+    return null;
+  }
+};

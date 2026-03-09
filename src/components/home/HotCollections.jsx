@@ -123,9 +123,15 @@ const HotCollections = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+
+
+
     const loadData = async () => {
       try {
         const data = await getHotCollections();
+
+console.log("HOT COLLECTIONS:", data);
+
         setCollections(data || []);
       } catch (err) {
         console.error(err);
@@ -165,17 +171,25 @@ const HotCollections = () => {
               <div className="nft_coll">
 
                 <div
-                  className="nft_wrap"
-                  style={{
-                    backgroundImage: `url(${item.nftImage})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center"
-                  }}
-                >
-                  <Link to={`/item/${item.id}`}>
-                    <span className="nft_coll_hover" />
-                  </Link>
-                </div>
+  className="nft_wrap"
+  style={{
+    backgroundImage: `url(${item.nftImage})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center"
+  }}
+>
+  <Link
+    to={`/item/${item.nftId}`}
+    style={{
+      display: "block",
+      width: "100%",
+      height: "100%",
+      cursor: "pointer"
+    }}
+  >
+    <span className="nft_coll_hover" />
+  </Link>
+</div>
 
                 <div className="nft_coll_pp">
                   <Link to={`/author/${item.authorId}`}>

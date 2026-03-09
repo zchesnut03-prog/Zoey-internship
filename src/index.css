@@ -138,7 +138,7 @@
   100% { opacity: 0.5; }
 }
 
-/* --- FORCE EXPLORE CARDS TO DISPLAY --- */
+/* explore cards */
 
 .d-item {
   display: block !important;

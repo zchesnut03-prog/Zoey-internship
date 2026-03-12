@@ -13,39 +13,34 @@ export const getNewItems = async () => {
   return res.data;
 };
 
-// export const getNewItems = async () => {
-//   const res = await axios.get(`${BASE_URL}/newItems`);
-//   return res.data.data;   
-// };
+
 
 export const getTopSellers = async () => {
   const res = await axios.get(`${BASE_URL}/topSellers`);
   return res.data;
 };
 
-// export const getExploreItems = async () => {
-//   const res = await axios.get(`${BASE_URL}/explore`);
-//   return res.data;
-// };
+
 
 export const getExploreItems = async () => {
   const res = await axios.get(`${BASE_URL}/explore`);
   console.log("FULL EXPLORE RESPONSE:", res.data);
-  return res.data;   // ✅ return raw data
+  return res.data;   
 };
 
-// export const getAuthorById = async (authorId) => {
-//   const res = await axios.get(
-//     `${BASE_URL}/authors?author=${authorId}`
-//   );
-//   return res.data;
-// };
+
 
 export const getAuthorById = async (authorId) => {
-  const res = await axios.get(
-    `${BASE_URL}/authors?author=${authorId}`
-  );
-  return res.data.data;   
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/authors?author=${authorId}`
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("Author API error:", error);
+    return null;
+  }
 };
 
 export const getItemDetails = async (nftId) => {

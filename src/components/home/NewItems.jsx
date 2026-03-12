@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import OwlCarousel from "react-owl-carousel";
 import { getNewItems } from "../../API/nftAPI";
+import AOS from "aos";
+
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
@@ -14,9 +16,9 @@ const NewItems = () => {
     try {
       const data = await getNewItems();
 
-console.log("NEW ITEMS RESPONSE:", data);
 
       setItems(data || []);
+      AOS.refresh();
     } catch (err) {
       console.error(err);
     } finally {
@@ -33,10 +35,22 @@ console.log("NEW ITEMS RESPONSE:", data);
     nav: true,
     dots: false,
     responsive: {
-      0: { items: 1 },
-      768: { items: 2 },
-      1024: { items: 4 }
-    }
+  0: {
+    items: 1
+  },
+  576: {
+    items: 1
+  },
+  768: {
+    items: 2
+  },
+  992: {
+    items: 3
+  },
+  1200: {
+    items: 4
+  }
+}
   };
 
   return (
@@ -56,7 +70,10 @@ console.log("NEW ITEMS RESPONSE:", data);
             ) : (
               <OwlCarousel className="owl-theme" {...options}>
                 {items.map((item) => (
-                  <div className="item" key={item.nftId}>
+                  <div className="item" 
+                  key={item.nftId}
+                  data-aos="zoom-in"
+                  >
                     <NFTItem item={item} />
                   </div>
                 ))}
@@ -130,9 +147,6 @@ const NFTItem = ({ item }) => {
     </div>
   );
 };
-
-
-
 
 const SkeletonItems = () => (
   <div className="row">

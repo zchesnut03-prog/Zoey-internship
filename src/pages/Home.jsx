@@ -5,9 +5,16 @@ import Landing from "../components/home/Landing";
 import LandingIntro from "../components/home/LandingIntro";
 import NewItems from "../components/home/NewItems";
 import TopSellers from "../components/home/TopSellers";
+import AOS from "aos";
+
 
 const Home = () => {
   useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-out-cubic"
+    });
     window.scrollTo(0, 0);
   }, []);
 

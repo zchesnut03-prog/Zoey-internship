@@ -12,7 +12,7 @@
 @import "./css/styles/coloring.css";
 
 
-/* Skeleton Loading */
+/* skeleton loading state */
 .skeleton {
   animation: pulse 1.5s infinite;
 }
@@ -89,7 +89,7 @@
   margin-bottom: 10px;
 }
 
-/* Skeleton */
+/* skeleton */
 .skeleton {
   animation: pulse 1.5s infinite ease-in-out;
 }
@@ -160,3 +160,44 @@
 img.lazy {
   opacity: 1 !important;
 }
+
+/* hotcollections cards */
+
+
+.nft_coll .nft_wrap {
+  transition: transform 0.3s ease;
+}
+
+.nft_coll:hover .nft_wrap {
+  transform: scale(1.05);
+}
+
+.nft_coll {
+  overflow: hidden;
+}
+
+.nft__item_wrap {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+/* responsiveness */
+
+@media (max-width: 900px) {
+
+  .nft__item_wrap {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .nft__item_preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+}
+
+
+
+
